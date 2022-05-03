@@ -8,12 +8,7 @@ class Friutes extends Component {
   changeColor = () => {
     this.setState({ color: "green" });
   };
-  //changeCountplus = () => {
-  //this.setState({ count: this.state.count + 1 });
-  //};
-  //changeCountminus = () => {
-  // this.setState({ count: this.state.count - 1 });
-  //};
+
   changeCount = (type) => {
     console.log("type", type);
 
