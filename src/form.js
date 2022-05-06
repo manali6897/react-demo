@@ -90,5 +90,3 @@ export const Myform = () => {
     </>
   );
 };
-
-export default Myform;

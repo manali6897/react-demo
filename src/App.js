@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import "./App.css";
 import MyExample from "./example1";
 import Friutes from "./example2";
@@ -13,6 +12,9 @@ import Mysheet from "./map";
 import { BirthSheet } from "./functionMap";
 import { NestedArray } from "./nestedarraymap";
 import Mylifecycleexa from "./lifecycle";
+import { MyfunLifecycleexa } from "./funlifecycle";
+import { Todoform } from "./todolist";
+
 function App() {
   // let obj = {
   //   item: "Personasoap",
@@ -99,8 +101,8 @@ function App() {
   return (
     <>
       <div>
-        // <MyExample />
-        // <Friutes />
+        {/* <MyExample />
+        <Friutes /> */}
         <MyExample1 />
         <Mycal />
         <MyElement
@@ -123,6 +125,8 @@ function App() {
         <BirthSheet />
         <NestedArray />
         <Mylifecycleexa />
+        <MyfunLifecycleexa />
+        <Todoform />
       </div>
     </>
   );

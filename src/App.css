@@ -38,9 +38,27 @@
 }
 .menu li{
   list-style-type: decimal;
- right:0;
+ 
 }
 .hello{
   font-size: 35px;
   color: crimson;
+}
+.container{
+ 
+ background:gray;
+ margin:20px;
+ padding:50px;
+}
+
+
+.user-detail{
+ display:block;
+ font-family: Verdana, Geneva, Tahoma, sans-serif;
+ font-size: 20px;
+}
+.inputbox{
+  display: flex;
+  justify-content: center;
+
 }
