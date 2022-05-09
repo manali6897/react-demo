@@ -2,9 +2,10 @@ import React, { useState } from "react";
 export const Todoform = () => {
   const [input, setInput] = useState({});
   const [tableData, setTableData] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectedEditData, setSelectedEditData] = useState("");
 
   const handleChange = (event) => {
-    console.log("event", event.target.name, event.target.value);
     const name = event.target.name;
     const value = event.target.value;
     setInput({ ...input, [name]: value });
@@ -22,14 +23,35 @@ export const Todoform = () => {
     setInput("");
   };
 
-  console.log("obj", tableData);
+  const handleDelete = (id) => {
+    let newtodoList = tableData.filter((item, index) => index != id);
+
+    setTableData(newtodoList);
+  };
+
+  const handleEdit = (data) => {
+    setInput(data);
+  };
+
+  const UpdateTodo = () => {
+    console.log("selected", selectedEditData, input);
+    let selectedEditDatas = tableData.map((item, index) => {
+      if (index == selectedEditData) {
+        return input;
+      }
+      return item;
+    });
+    setTableData(selectedEditDatas);
+    setIsEdit(false);
+    setInput("");
+  };
+
   return (
     <>
       <div className="container">
         <div className="user-detail">
           <div className="inputbox">
             <label>Enter Firstname </label>
-
             <input
               type="text"
               name="firstname"
@@ -56,7 +78,8 @@ export const Todoform = () => {
               type="radio"
               id="male"
               name="gender"
-              value="Male"
+              checked={input.gender === "Male"}
+              value={"Male"}
               onChange={handleChange}
             />
             <lable>Male</lable>
@@ -65,7 +88,8 @@ export const Todoform = () => {
               type="radio"
               id="female"
               name="gender"
-              value="Female"
+              checked={input.gender === "Female"}
+              value={"Female"}
               onChange={handleChange}
             />
             <lable>Female </lable>
@@ -74,11 +98,21 @@ export const Todoform = () => {
           <div className="inputbox">
             <label>Enter City</label>
             <select name="city" onChange={handleChange}>
-              <option value="">Select</option>
-              <option value="Nadiad">Nadiad</option>
-              <option value="Baroda">Baroda</option>
-              <option value="Ahemdabad">Ahemdabad</option>
-              <option value="Rajkot">rajkot</option>
+              <option value="" selected={input.city == ""}>
+                Select
+              </option>
+              <option value="Nadiad" selected={input.city == "Nadiad"}>
+                Nadiad
+              </option>
+              <option value="Baroda" selected={input.city == "Baroda"}>
+                Baroda
+              </option>
+              <option value="Ahemdabad" selected={input.city == "Ahemdabad"}>
+                Ahemdabad
+              </option>
+              <option value="Rajkot" selected={input.city == "Rajkot"}>
+                Rajkot
+              </option>
             </select>
           </div>
           <br />
@@ -94,7 +128,24 @@ export const Todoform = () => {
           <br />
           <br />
           <div className="inputbox">
-            <button onClick={() => handleSubmit()}>ADD</button>
+            {isEdit == false ? (
+              <button
+                onClick={() => {
+                  handleSubmit();
+                  setIsEdit(false);
+                }}
+              >
+                ADD
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  UpdateTodo();
+                }}
+              >
+                UPDATE
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -107,6 +158,7 @@ export const Todoform = () => {
           <th>City</th>
           <th>Gender</th>
           <th>Email</th>
+          <th>Action</th>
         </tr>
         <tbody>
           {tableData?.map((obj, index) => {
@@ -119,6 +171,18 @@ export const Todoform = () => {
                   <td>{obj?.city}</td>
                   <td>{obj?.gender}</td>
                   <td>{obj?.email}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        handleEdit(obj);
+                        setIsEdit(true);
+                        setSelectedEditData(index);
+                      }}
+                    >
+                      EDIT
+                    </button>
+                    <button onClick={() => handleDelete(index)}>DELETE</button>
+                  </td>
                 </tr>
               </>
             );
