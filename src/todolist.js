@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+
+import { BiEdit } from "react-icons/bi";
+
+import { TiDelete } from "react-icons/ti";
 export const Todoform = () => {
   const [input, setInput] = useState({});
   const [tableData, setTableData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedEditData, setSelectedEditData] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -12,15 +17,17 @@ export const Todoform = () => {
   };
 
   const handleSubmit = () => {
-    let obj = {
-      firstname: input.firstname !== undefined ? input.firstname : "",
-      lastname: input.lastname !== undefined ? input.lastname : "",
-      gender: input.gender !== undefined ? input.gender : "",
-      city: input.city !== undefined ? input.city : "",
-      email: input.email !== undefined ? input.email : "",
-    };
-    setTableData([...tableData, obj]);
-    setInput("");
+    if (isValidate()) {
+      let obj = {
+        firstname: input.firstname !== undefined ? input.firstname : "",
+        lastname: input.lastname !== undefined ? input.lastname : "",
+        gender: input.gender !== undefined ? input.gender : "",
+        city: input.city !== undefined ? input.city : "",
+        email: input.email !== undefined ? input.email : "",
+      };
+      setTableData([...tableData, obj]);
+      setInput("");
+    }
   };
 
   const handleDelete = (id) => {
@@ -35,44 +42,129 @@ export const Todoform = () => {
 
   const UpdateTodo = () => {
     console.log("selected", selectedEditData, input);
-    let selectedEditDatas = tableData.map((item, index) => {
-      if (index == selectedEditData) {
-        return input;
-      }
-      return item;
-    });
-    setTableData(selectedEditDatas);
-    setIsEdit(false);
-    setInput("");
+    if (isValidate()) {
+      let selectedEditDatas = tableData.map((item, index) => {
+        if (index == selectedEditData) {
+          return input;
+        }
+        return item;
+      });
+      setTableData(selectedEditDatas);
+      setIsEdit(false);
+      setInput("");
+    }
+  };
+
+  const isValidate = () => {
+    let errors = {};
+    let flag = true;
+
+    if (!input.firstname) {
+      errors.firstname = "Firstname is required";
+      flag = false;
+    }
+    if (!input.lastname) {
+      errors.lastname = "Lastname is required";
+      flag = false;
+    }
+    if (!input.gender) {
+      errors.gender = "Gender is required";
+      flag = false;
+    }
+    if (!input.city) {
+      errors.city = "City is required";
+      flag = false;
+    }
+    if (!input.email) {
+      errors.email = "email is required";
+      flag = false;
+    }
+    setErrors(errors);
+    return flag;
   };
 
   return (
     <>
       <div className="container">
+        <div className="heading">
+          <p>Registration Form</p>
+        </div>
         <div className="user-detail">
           <div className="inputbox">
-            <label>Enter Firstname </label>
+            <span className="details">Enter Firstname </span>
             <input
+              className="input"
               type="text"
               name="firstname"
               value={input.firstname || ""}
               onChange={handleChange}
+              placeholder="Enter your firstname"
             />
+          </div>
+          <div className="errormsg">
+            {" "}
+            {errors?.firstname ? <span>{errors?.firstname}</span> : null}{" "}
           </div>
 
           <br />
           <div className="inputbox">
-            <label>Enter Lastname</label>
+            <span className="details">Enter Lastname</span>
             <input
+              className="input"
               type="text"
               name="lastname"
               value={input.lastname || ""}
               onChange={handleChange}
+              placeholder="Enter your lastname"
             />
+          </div>
+
+          <div>
+            {" "}
+            {errors?.lastname ? <span>{errors?.lastname}</span> : null}{" "}
+          </div>
+          <br />
+
+          <div className="inputbox">
+            <span className="details">Enter Email</span>
+            <input
+              className="input"
+              type="text"
+              name="email"
+              value={input.email || ""}
+              onChange={handleChange}
+              placeholder="Enter your email"
+            />
+          </div>
+          <div> {errors?.email ? <span>{errors?.email}</span> : null} </div>
+          <br />
+          <div className="inputbox">
+            <span className="details">Enter City</span>
+
+            <select className="input" name="city" onChange={handleChange}>
+              <option value="" selected={input.city == ""}>
+                Select
+              </option>
+              <option value="Nadiad" selected={input.city == "Nadiad"}>
+                Nadiad
+              </option>
+              <option value="Baroda" selected={input.city == "Baroda"}>
+                Baroda
+              </option>
+              <option value="Ahemdabad" selected={input.city == "Ahemdabad"}>
+                Ahemdabad
+              </option>
+              <option value="Rajkot" selected={input.city == "Rajkot"}>
+                Rajkot
+              </option>
+            </select>
+          </div>
+          <div>
+            {""} {errors?.city ? <span>{errors?.city}</span> : null}{" "}
           </div>
           <br />
           <div className="inputbox">
-            <lable>Enter Gender</lable>
+            <span className="details">Enter Gender</span>
 
             <input
               type="radio"
@@ -94,51 +186,20 @@ export const Todoform = () => {
             />
             <lable>Female </lable>
           </div>
-          <br />
-          <div className="inputbox">
-            <label>Enter City</label>
-            <select name="city" onChange={handleChange}>
-              <option value="" selected={input.city == ""}>
-                Select
-              </option>
-              <option value="Nadiad" selected={input.city == "Nadiad"}>
-                Nadiad
-              </option>
-              <option value="Baroda" selected={input.city == "Baroda"}>
-                Baroda
-              </option>
-              <option value="Ahemdabad" selected={input.city == "Ahemdabad"}>
-                Ahemdabad
-              </option>
-              <option value="Rajkot" selected={input.city == "Rajkot"}>
-                Rajkot
-              </option>
-            </select>
+          <div>
+            {""} {errors?.gender ? <span>{errors?.gender}</span> : null}
+            {""}
           </div>
-          <br />
-          <div className="inputbox">
-            <label>Enter Email</label>
-            <input
-              type="text"
-              name="email"
-              value={input.email || ""}
-              onChange={handleChange}
-            />
-          </div>
-          <br />
+
           <br />
           <div className="inputbox">
             {isEdit == false ? (
-              <button
-                onClick={() => {
-                  handleSubmit();
-                  setIsEdit(false);
-                }}
-              >
+              <button className="addbtn" onClick={() => handleSubmit()}>
                 ADD
               </button>
             ) : (
               <button
+                className="updatebtn"
                 onClick={() => {
                   UpdateTodo();
                 }}
@@ -179,9 +240,11 @@ export const Todoform = () => {
                         setSelectedEditData(index);
                       }}
                     >
-                      EDIT
+                      <BiEdit size={24} color="red" />
                     </button>
-                    <button onClick={() => handleDelete(index)}>DELETE</button>
+                    <button onClick={() => handleDelete(index)}>
+                      <TiDelete size={24} />
+                    </button>
                   </td>
                 </tr>
               </>
