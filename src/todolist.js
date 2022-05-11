@@ -1,14 +1,34 @@
 import React, { useState } from "react";
 
 import { BiEdit } from "react-icons/bi";
-
 import { TiDelete } from "react-icons/ti";
+let checkArray = [
+  { id: 1, name: "banana" },
+  { id: 2, name: "apple" },
+  { id: 3, name: "mango" },
+  { id: 4, name: "grap" },
+  { id: 5, name: "chikoo" },
+  { id: 6, name: "pineapple" },
+  { id: 7, name: "evakado" },
+  { id: 8, name: "strawbarry" },
+  { id: 9, name: "watermalon" },
+  { id: 10, name: "raspbarry" },
+  { id: 11, name: "bluebarry" },
+  { id: 12, name: "cherry" },
+  { id: 13, name: "date" },
+  { id: 14, name: "dragon fruit" },
+];
 export const Todoform = () => {
   const [input, setInput] = useState({});
   const [tableData, setTableData] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedEditData, setSelectedEditData] = useState("");
   const [errors, setErrors] = useState({});
+  const [filteredResults, setFilterdResults] = useState([]);
+  const [isFilter, setIsFilter] = useState(false);
+  const [search, setSearch] = useState("");
+  const [ischeckitem, setIscheckItem] = useState([]);
+  const [checkList, SetcheckList] = useState(checkArray);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -41,7 +61,6 @@ export const Todoform = () => {
   };
 
   const UpdateTodo = () => {
-    console.log("selected", selectedEditData, input);
     if (isValidate()) {
       let selectedEditDatas = tableData.map((item, index) => {
         if (index == selectedEditData) {
@@ -82,9 +101,64 @@ export const Todoform = () => {
     setErrors(errors);
     return flag;
   };
+  const handleSearch = (searchValue) => {
+    if (searchValue !== "") {
+      const filterdData = tableData.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(searchValue.toLowerCase());
+      });
+      setFilterdResults(filterdData);
+      setIsFilter(true);
+    } else {
+      setFilterdResults(tableData);
+      setIsFilter(false);
+    }
+  };
+  const handleCheck = (checkitem, e) => {
+    let flag = e.target.checked;
+    console.log("checkfruit", e.target.checked);
 
+    if (flag) {
+      let newData = checkList.filter((x) => x.id === checkitem.id);
+      console.log("newData", newData);
+      setIscheckItem([...ischeckitem, newData[0]]);
+    } else {
+      const newcheck = checkList.filter((x) => x.id !== checkitem.id);
+      console.log("uncheckfruit", newcheck);
+      setIscheckItem(newcheck[0]);
+    }
+
+    // if (checkList.filter((x) => x.id === checkitem.id).length === 0) {
+    //   console.log("checkitem", checkitem);
+    //   SetcheckItem([...checkList, checkitem]);
+    // } else {
+
+    //   const newcheck = .filter((x) => x.id !== checkitem.id);
+    //   SetcheckItem(newcheck);
+    // }
+  };
+  console.log("fruites", ischeckitem);
+  const newTbaleData = isFilter ? filteredResults : tableData;
+  console.log("search", newTbaleData);
   return (
     <>
+      {checkList?.map((checkitem, index) => {
+        return (
+          <>
+            <input
+              type="checkbox"
+              checked={checkitem.checked}
+              name={checkitem.name}
+              value={checkitem.name}
+              onClick={(e) => handleCheck(checkitem, e)}
+            />
+            {checkitem.name}
+          </>
+        );
+      })}
+
       <div className="container">
         <div className="heading">
           <p>Registration Form</p>
@@ -211,6 +285,20 @@ export const Todoform = () => {
         </div>
       </div>
       <br />
+      <div>
+        <span>Search</span>
+        <input
+          onChange={(e) => {
+            handleSearch(e.target.value);
+            setSearch(e.target.value);
+          }}
+          name="search"
+          value={search}
+          placeholder="Serach here"
+        />
+      </div>
+      <br />
+      <br />
       <table border="1" width="100%">
         <tr>
           <th>ID</th>
@@ -220,9 +308,9 @@ export const Todoform = () => {
           <th>Gender</th>
           <th>Email</th>
           <th>Action</th>
-        </tr>
+        </tr>{" "}
         <tbody>
-          {tableData?.map((obj, index) => {
+          {newTbaleData?.map((obj, index) => {
             return (
               <>
                 <tr key={index}>
@@ -243,7 +331,7 @@ export const Todoform = () => {
                       <BiEdit size={24} color="red" />
                     </button>
                     <button onClick={() => handleDelete(index)}>
-                      <TiDelete size={24} />
+                      <TiDelete size={24} color="red" />
                     </button>
                   </td>
                 </tr>

@@ -43,6 +43,40 @@ let borndata = [
 ];
 export const BirthSheet = () => {
   const [birthdata, setBirthdata] = useState(borndata);
+
+  const handleCheck = () => {
+    let newData = birthdata.filter((x) => x.birthCity === 63);
+    console.log("birthCity 63 ", newData);
+    let newData1 = birthdata.filter((x) => x.birthYear > 2017);
+    console.log("birthYear 2017", newData1);
+    const transfer = borndata.map(
+      ({
+        id: id,
+        name: name,
+        surname: surname,
+        birthCity: birthCity,
+        birthYear: BirthOfYear,
+      }) => ({
+        id,
+        name,
+        surname,
+        birthCity,
+        BirthOfYear,
+      })
+    );
+    console.log("change obj key", transfer);
+    const transfer1 = borndata.map((obj) => {
+      return {
+        birthofyear: obj?.birthYear,
+        id: obj?.id,
+        name: obj?.name,
+        surname: obj?.surname,
+        birthCity: obj?.birthCity,
+      };
+    });
+    console.log("change obj key 2nd method", transfer1);
+  };
+
   return (
     <>
       <h2>Table use with list and map function component</h2>
@@ -70,6 +104,7 @@ export const BirthSheet = () => {
           })}
         </tbody>
       </table>
+      <button onClick={handleCheck}> click me</button>
     </>
   );
 };
