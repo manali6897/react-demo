@@ -37,17 +37,17 @@ export const Todoform = () => {
   };
 
   const handleSubmit = () => {
-    if (isValidate()) {
-      let obj = {
-        firstname: input.firstname !== undefined ? input.firstname : "",
-        lastname: input.lastname !== undefined ? input.lastname : "",
-        gender: input.gender !== undefined ? input.gender : "",
-        city: input.city !== undefined ? input.city : "",
-        email: input.email !== undefined ? input.email : "",
-      };
-      setTableData([...tableData, obj]);
-      setInput("");
-    }
+    //if (isValidate()) {
+    let obj = {
+      firstname: input.firstname !== undefined ? input.firstname : "",
+      lastname: input.lastname !== undefined ? input.lastname : "",
+      gender: input.gender !== undefined ? input.gender : "",
+      city: input.city !== undefined ? input.city : "",
+      email: input.email !== undefined ? input.email : "",
+    };
+    setTableData([...tableData, obj]);
+    setInput("");
+    //}
   };
 
   const handleDelete = (id) => {
@@ -129,15 +129,6 @@ export const Todoform = () => {
       console.log("uncheckfruit", newcheck);
       setIscheckItem(newcheck[0]);
     }
-
-    // if (checkList.filter((x) => x.id === checkitem.id).length === 0) {
-    //   console.log("checkitem", checkitem);
-    //   SetcheckItem([...checkList, checkitem]);
-    // } else {
-
-    //   const newcheck = .filter((x) => x.id !== checkitem.id);
-    //   SetcheckItem(newcheck);
-    // }
   };
   console.log("fruites", ischeckitem);
   const newTbaleData = isFilter ? filteredResults : tableData;

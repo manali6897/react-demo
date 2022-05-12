@@ -14,7 +14,8 @@ import { NestedArray } from "./nestedarraymap";
 import Mylifecycleexa from "./lifecycle";
 import { MyfunLifecycleexa } from "./funlifecycle";
 import { Todoform } from "./todolist";
-
+import { Matchdata } from "./matcharraydata";
+import Mytodo from "./classtodolist";
 function App() {
   // let obj = {
   //   item: "Personasoap",
@@ -103,6 +104,8 @@ function App() {
       <div>
         {/* <MyExample />
         <Friutes /> */}
+        <Mytodo />
+        <Matchdata />
         <MyExample1 />
         <Mycal />
         <MyElement
