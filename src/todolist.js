@@ -37,17 +37,17 @@ export const Todoform = () => {
   };
 
   const handleSubmit = () => {
-    //if (isValidate()) {
-    let obj = {
-      firstname: input.firstname !== undefined ? input.firstname : "",
-      lastname: input.lastname !== undefined ? input.lastname : "",
-      gender: input.gender !== undefined ? input.gender : "",
-      city: input.city !== undefined ? input.city : "",
-      email: input.email !== undefined ? input.email : "",
-    };
-    setTableData([...tableData, obj]);
-    setInput("");
-    //}
+    if (isValidate()) {
+      let obj = {
+        firstname: input.firstname !== undefined ? input.firstname : "",
+        lastname: input.lastname !== undefined ? input.lastname : "",
+        gender: input.gender !== undefined ? input.gender : "",
+        city: input.city !== undefined ? input.city : "",
+        email: input.email !== undefined ? input.email : "",
+      };
+      setTableData([...tableData, obj]);
+      setInput("");
+    }
   };
 
   const handleDelete = (id) => {
@@ -77,13 +77,13 @@ export const Todoform = () => {
   const isValidate = () => {
     let errors = {};
     let flag = true;
-
+    console.log("error", errors);
     if (!input.firstname) {
       errors.firstname = "Firstname is required";
       flag = false;
     }
     if (!input.lastname) {
-      errors.lastname = "Lastname is required";
+      errors.lastname = "Lastname is requbired";
       flag = false;
     }
     if (!input.gender) {
