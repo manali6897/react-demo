@@ -41,6 +41,65 @@ let borndata = [
   { id: 39, name: "jhn", surname: "cvvs", birthYear: 2019, birthCity: 63 },
   { id: 40, name: "tül", surname: "Baran", birthYear: 2020, birthCity: 34 },
 ];
+let bakeryArray = [
+  {
+    id: "0001",
+    type: "donut",
+    name: "Cake",
+    ppu: 0.55,
+    batters: {
+      batter: [
+        { id: "1001", type: "Regular" },
+        { id: "1002", type: "Chocolate" },
+        { id: "1003", type: "Blueberry" },
+        { id: "1004", type: "Devil's Food" },
+      ],
+    },
+    topping: [
+      { id: "5001", type: "None" },
+      { id: "5002", type: "Glazed" },
+      { id: "5005", type: "Sugar" },
+      { id: "5007", type: "Powdered Sugar" },
+      { id: "5006", type: "Chocolate with Sprinkles" },
+      { id: "5003", type: "Chocolate" },
+      { id: "5004", type: "Maple" },
+    ],
+  },
+  {
+    id: "0002",
+    type: "donut",
+    name: "Raised",
+    ppu: 0.55,
+    batters: {
+      batter: [{ id: "1001", type: "Regular" }],
+    },
+    topping: [
+      { id: "5001", type: "None" },
+      { id: "5002", type: "Glazed" },
+      { id: "5005", type: "Sugar" },
+      { id: "5003", type: "Chocolate" },
+      { id: "5004", type: "Maple" },
+    ],
+  },
+  {
+    id: "0003",
+    type: "donut",
+    name: "Old Fashioned",
+    ppu: 0.55,
+    batters: {
+      batter: [
+        { id: "1001", type: "Regular" },
+        { id: "1002", type: "Chocolate" },
+      ],
+    },
+    topping: [
+      { id: "5001", type: "None" },
+      { id: "5002", type: "Glazed" },
+      { id: "5003", type: "Chocolate" },
+      { id: "5004", type: "Maple" },
+    ],
+  },
+];
 export const BirthSheet = () => {
   const [birthdata, setBirthdata] = useState(borndata);
 
@@ -75,8 +134,19 @@ export const BirthSheet = () => {
       };
     });
     console.log("change obj key 2nd method", transfer1);
-  };
 
+    const handleKeyTransfer = bakeryArray?.map((items) => {
+      return {
+        ...items,
+        batters: {
+          batter: items?.batters?.batter?.map((subitems) => {
+            return { TYPE: subitems?.type, id: subitems?.id };
+          }),
+        },
+      };
+    });
+    console.log("your message", handleKeyTransfer);
+  };
   return (
     <>
       <h2>Table use with list and map function component</h2>
@@ -104,7 +174,7 @@ export const BirthSheet = () => {
           })}
         </tbody>
       </table>
-      <button onClick={handleCheck}> click me</button>
+      <button onClick={() => handleCheck()}> click me</button>
     </>
   );
 };

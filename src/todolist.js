@@ -77,13 +77,13 @@ export const Todoform = () => {
   const isValidate = () => {
     let errors = {};
     let flag = true;
-
+    console.log("error", errors);
     if (!input.firstname) {
       errors.firstname = "Firstname is required";
       flag = false;
     }
     if (!input.lastname) {
-      errors.lastname = "Lastname is required";
+      errors.lastname = "Lastname is requbired";
       flag = false;
     }
     if (!input.gender) {
@@ -129,15 +129,6 @@ export const Todoform = () => {
       console.log("uncheckfruit", newcheck);
       setIscheckItem(newcheck[0]);
     }
-
-    // if (checkList.filter((x) => x.id === checkitem.id).length === 0) {
-    //   console.log("checkitem", checkitem);
-    //   SetcheckItem([...checkList, checkitem]);
-    // } else {
-
-    //   const newcheck = .filter((x) => x.id !== checkitem.id);
-    //   SetcheckItem(newcheck);
-    // }
   };
   console.log("fruites", ischeckitem);
   const newTbaleData = isFilter ? filteredResults : tableData;
